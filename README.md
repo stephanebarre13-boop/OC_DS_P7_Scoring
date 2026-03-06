@@ -29,7 +29,7 @@ Développement d'un système de scoring crédit pour la société financière "P
 1. **NB01 - Agrégation des tables** : Transformation des 122 features initiales en 804 features agrégées
 2. **NB02 - Pipeline de préparation** : Preprocessing et feature engineering
 3. **NB03 - Comparaison des modèles** : Benchmark de différents algorithmes
-4. **NB04 - Gestion du déséquilibre** : Application de SMOTE et techniques de rééchantillonnage
+4. **NB04 - Gestion du déséquilibre** : class_weight='balanced'
 5. **NB05 - Optimisation du seuil** : Calibration selon les coûts métier (FN=10, FP=1)
 6. **NB06 - Interprétabilité SHAP** : Explainability globale et locale des prédictions
 7. **NB07 - Monitoring data drift** : Détection des dérives avec Evidently
@@ -163,7 +163,6 @@ Le dashboard sera accessible sur `http://localhost:8501`
 - **numpy** : Calculs numériques
 - **scikit-learn** : Preprocessing et métriques
 - **LightGBM** : Algorithme de gradient boosting
-- **imbalanced-learn** : Gestion du déséquilibre (SMOTE)
 - **SHAP** : Explainability des prédictions
 
 ### Backend & API
@@ -191,7 +190,7 @@ Le dashboard sera accessible sur `http://localhost:8501`
 - **Seuil optimal** : 0.370 (optimisé selon ratio coût 10:1)
 
 ### Méthodologie
-- **Gestion déséquilibre** : SMOTE + ajustement des poids de classe
+- **Gestion déséquilibre** : class_weight='balanced'
 - **Optimisation** : Minimisation du coût métier (FN coûte 10x plus que FP)
 - **Explainability** : SHAP values pour chaque prédiction
 
@@ -207,7 +206,6 @@ Le dashboard sera accessible sur `http://localhost:8501`
 
 Les fichiers suivants sont exclus du repository Git (voir `.gitignore`) :
 - `/data/` : Données sources (plusieurs Go)
-- `/artifacts/` : Modèles entraînés (peuvent être régénérés)
 
 Ces exclusions respectent les bonnes pratiques Git (pas de fichiers volumineux).
 
