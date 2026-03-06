@@ -1,0 +1,59 @@
+{
+  "methode_retenue": "RandomUnderSampler",
+  "date_analyse": "2026-03-04 09:42:13",
+  "metriques": {
+    "recall": 0.6787512588116817,
+    "precision": 0.15867037054475258,
+    "f1_score": 0.2572126392917112,
+    "roc_auc": 0.7441502370779443,
+    "cout_metier": 33819.0,
+    "faux_negatifs": 1595,
+    "faux_positifs": 17869
+  },
+  "comparaison_baseline": {
+    "gain_cout_pct": 31.885196374622353,
+    "gain_recall_pct": Infinity
+  },
+  "toutes_methodes": [
+    {
+      "Méthode": "Baseline",
+      "Recall": 0.0,
+      "Precision": 0.0,
+      "F1-Score": 0.0,
+      "ROC-AUC": 0.7423232486079172,
+      "Coût Métier": 49650,
+      "Faux Négatifs": 4965,
+      "Faux Positifs": 0
+    },
+    {
+      "Méthode": "SMOTE",
+      "Recall": 0.04390735146022155,
+      "Precision": 0.2661782661782662,
+      "F1-Score": 0.07538035961272475,
+      "ROC-AUC": 0.688029464827826,
+      "Coût Métier": 48071,
+      "Faux Négatifs": 4747,
+      "Faux Positifs": 601
+    },
+    {
+      "Méthode": "RandomUnderSampler",
+      "Recall": 0.6787512588116817,
+      "Precision": 0.15867037054475258,
+      "F1-Score": 0.2572126392917112,
+      "ROC-AUC": 0.7441502370779443,
+      "Coût Métier": 33819,
+      "Faux Négatifs": 1595,
+      "Faux Positifs": 17869
+    },
+    {
+      "Méthode": "SMOTEENN",
+      "Recall": 0.5377643504531722,
+      "Precision": 0.1862054536578562,
+      "F1-Score": 0.2766266058847907,
+      "ROC-AUC": 0.7422972890820138,
+      "Coût Métier": 34619,
+      "Faux Négatifs": 2295,
+      "Faux Positifs": 11669
+    }
+  ]
+}
