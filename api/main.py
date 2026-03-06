@@ -378,6 +378,12 @@ def expliquer(requete: RequeteExplication) -> ReponseExplication:
 
         preprocess = _get_preprocess()
         X_transformed = np.array(list(donnees_client.iloc[0].values)).reshape(1, -1)
+        n_model = pipeline_final.n_features_in_
+        n_input = X_transformed.shape[1]
+        if n_input < n_model:
+            X_transformed = np.hstack([X_transformed, np.zeros((1, n_model - n_input))])
+        elif n_input > n_model:
+            X_transformed = X_transformed[:, :n_model]
 
         shap_values = explainer.shap_values(X_transformed)
         if isinstance(shap_values, list):
