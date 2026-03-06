@@ -615,10 +615,10 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs(
 with tab1:
     st.header("Informations du client")
 
-    # ── SELECTION CLIENT PRE-DEFINI ─────────────────────────
+   # ── SELECTION CLIENT PRE-DEFINI ─────────────────────────
     CLIENTS_PREDEFINED = {
         "Saisie manuelle": None,
-        "Client ID : 100001 (profil standard)": {
+        "Client ID : 100001 (très faible risque)": {
             "client_api_id": 100001,
             "genre": "F", "age": 35, "education": "Secondaire",
             "situation": "Marié(e)", "enfants": 0,
@@ -632,21 +632,21 @@ with tab1:
             "revenu": 280000, "anciennete": 15, "type_emploi": "Salarié",
             "credit": 200000, "annuite": 15000, "prix": 250000, "duree": 18,
         },
-        "Client ID : 100003 (risque élevé)": {
+        "Client ID : 100003 (profil standard)": {
             "client_api_id": 100003,
             "genre": "M", "age": 27, "education": "Incomplet",
             "situation": "Célibataire", "enfants": 2,
             "revenu": 60000, "anciennete": 1, "type_emploi": "Autre",
             "credit": 350000, "annuite": 30000, "prix": 380000, "duree": 15,
         },
-        "Client ID : 100004 (risque modéré)": {
+        "Client ID : 100004 (risque élevé)": {
             "client_api_id": 100004,
             "genre": "M", "age": 40, "education": "Secondaire",
             "situation": "Union civile", "enfants": 3,
             "revenu": 120000, "anciennete": 8, "type_emploi": "Salarié",
             "credit": 300000, "annuite": 22000, "prix": 330000, "duree": 15,
         },
-        "Client ID : 100005 (très faible risque)": {
+        "Client ID : 100005 (risque très élevé)": {
             "client_api_id": 100005,
             "genre": "F", "age": 55, "education": "Enseignement supérieur",
             "situation": "Marié(e)", "enfants": 0,
