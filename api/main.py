@@ -524,7 +524,7 @@ def get_client(client_id: int):
             clients = json.load(f)
         for c in clients:
             if c.get("SK_ID_CURR") == client_id:
-                return {"client_id": client_id, "features": c}
+                return {"client_id": client_id, "features": c["features"]}
         raise HTTPException(status_code=404, detail=f"Client {client_id} introuvable")
     except HTTPException:
         raise
