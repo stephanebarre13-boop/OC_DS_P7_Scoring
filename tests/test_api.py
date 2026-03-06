@@ -15,6 +15,7 @@ mock_model = MagicMock()
 mock_model.feature_name_ = [f"FEATURE_{i}" for i in range(804)]
 mock_model.feature_importances_ = np.ones(804) / 804
 mock_model.n_features_ = 804
+mock_model.n_features_in_ = 804
 mock_model.predict_proba.return_value = np.array([[0.3, 0.7]])
 
 mock_explainer = MagicMock()
@@ -39,7 +40,7 @@ def test_health():
     data = response.json()
     assert "status" in data
     assert "version" in data
-    assert "model_loaded" in data
+    assert "pipeline_charge" in data
 
 
 def test_predict_features_valides():
@@ -56,12 +57,9 @@ def test_predict_features_valides():
 
 
 def test_predict_features_vides():
-    """Verifie que predict gere les features vides avec des valeurs par defaut."""
+    """Verifie que predict rejette les features vides avec 422."""
     response = client.post("/predict", json={"features": {}})
-    assert response.status_code == 200
-    data = response.json()
-    assert "probabilite_defaut" in data
-    assert "decision_label" in data
+    assert response.status_code == 422
 
 
 def test_root():
