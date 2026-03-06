@@ -618,31 +618,36 @@ with tab1:
     # ── SELECTION CLIENT PRE-DEFINI ─────────────────────────
     CLIENTS_PREDEFINED = {
         "Saisie manuelle": None,
-        "Client ID : BATCH_000 (profil standard)": {
+        "Client ID : 100001 (profil standard)": {
+            "client_api_id": 100001,
             "genre": "F", "age": 35, "education": "Secondaire",
             "situation": "Marié(e)", "enfants": 0,
             "revenu": 150000, "anciennete": 5, "type_emploi": "Salarié",
             "credit": 450000, "annuite": 25000, "prix": 405000, "duree": 20,
         },
-        "Client ID : BATCH_001 (risque élevé)": {
-            "genre": "M", "age": 27, "education": "Incomplet",
-            "situation": "Célibataire", "enfants": 2,
-            "revenu": 60000, "anciennete": 1, "type_emploi": "Autre",
-            "credit": 350000, "annuite": 30000, "prix": 380000, "duree": 15,
-        },
-        "Client ID : BATCH_002 (faible risque)": {
+        "Client ID : 100002 (faible risque)": {
+            "client_api_id": 100002,
             "genre": "F", "age": 48, "education": "Enseignement supérieur",
             "situation": "Marié(e)", "enfants": 1,
             "revenu": 280000, "anciennete": 15, "type_emploi": "Salarié",
             "credit": 200000, "annuite": 15000, "prix": 250000, "duree": 18,
         },
-        "Client ID : BATCH_003 (profil mixte)": {
+        "Client ID : 100003 (risque élevé)": {
+            "client_api_id": 100003,
+            "genre": "M", "age": 27, "education": "Incomplet",
+            "situation": "Célibataire", "enfants": 2,
+            "revenu": 60000, "anciennete": 1, "type_emploi": "Autre",
+            "credit": 350000, "annuite": 30000, "prix": 380000, "duree": 15,
+        },
+        "Client ID : 100004 (risque modéré)": {
+            "client_api_id": 100004,
             "genre": "M", "age": 40, "education": "Secondaire",
             "situation": "Union civile", "enfants": 3,
             "revenu": 120000, "anciennete": 8, "type_emploi": "Salarié",
             "credit": 300000, "annuite": 22000, "prix": 330000, "duree": 15,
         },
-        "Client ID : BATCH_004 (revenus élevés)": {
+        "Client ID : 100005 (très faible risque)": {
+            "client_api_id": 100005,
             "genre": "F", "age": 55, "education": "Enseignement supérieur",
             "situation": "Marié(e)", "enfants": 0,
             "revenu": 450000, "anciennete": 25, "type_emploi": "Salarié",
@@ -763,6 +768,18 @@ with tab1:
 
             st.session_state["last_features"] = features
             st.session_state["last_client_inputs"] = client_inputs
+
+            # Si client API sélectionné, récupérer ses vraies features
+            client_api_id = client_preset.get("client_api_id") if client_preset else None
+            if client_api_id is not None:
+                try:
+                    r = requests.get(f"{API_URL}/clients/{client_api_id}", timeout=10)
+                    if r.status_code == 200:
+                        features = r.json()["features"]
+                    else:
+                        st.warning(f"Client {client_api_id} non trouvé dans l'API, utilisation des features simplifiées.")
+                except Exception:
+                    st.warning("Impossible de récupérer les features complètes, utilisation des features simplifiées.")
 
             with st.spinner("🔄 Analyse en cours..."):
                 try:
