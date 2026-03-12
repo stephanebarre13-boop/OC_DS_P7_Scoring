@@ -188,6 +188,7 @@ Le dashboard sera accessible sur `http://localhost:8501`
 - **Algorithme** : LightGBM Classifier
 - **Features** : 804 (après agrégation de 7 tables)
 - **Seuil optimal** : 0.370 (optimisé selon ratio coût 10:1)
+- - **AUC-ROC** : 0.787 (validation croisée 5 folds)
 
 ### Méthodologie
 - **Gestion déséquilibre** : class_weight='balanced'
