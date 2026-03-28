@@ -1,243 +1,128 @@
-# Projet 7 - Implementez un modèle de scoring
+# 💳 Modèle de scoring crédit — Prédiction du risque client
 
-[![CI Tests](https://github.com/stephanebarre13-boop/Barre_Stephane_P7/actions/workflows/main.yml/badge.svg)](https://github.com/stephanebarre13-boop/Barre_Stephane_P7/actions/workflows/main.yml)
-
-**Auteur :** Stéphane BARRE
-**Formation :** OpenClassrooms - Parcours Data Scientist  
-**Date :** mars 2026
-
----
-
-## 📋 Description du projet
-
-Développement d'un système de scoring crédit pour la société financière "Prêt à dépenser", permettant de prédire la probabilité de défaut de paiement d'un client et d'améliorer la transparence des décisions de crédit.
-
-### Objectifs
-
-- Construire un modèle de machine learning pour prédire le risque de défaut
-- Optimiser le seuil de décision selon les coûts métier (ratio 10:1)
-- Développer une API pour les prédictions en temps réel
-- Créer un dashboard interactif avec explainability (SHAP)
-- Implémenter un système de monitoring des dérives (data drift)
+![Python](https://img.shields.io/badge/Python-3.8-blue?logo=python)
+![Scikit-learn](https://img.shields.io/badge/Scikit--learn-1.x-orange?logo=scikitlearn)
+![MLflow](https://img.shields.io/badge/MLflow-Tracking-blue?logo=mlflow)
+![Streamlit](https://img.shields.io/badge/Streamlit-Dashboard-red?logo=streamlit)
+![Status](https://img.shields.io/badge/Status-Completed-brightgreen)
 
 ---
 
-## 🎯 Livrables
+## 🎯 Objectif
 
-### 1. Notebooks d'analyse (7 notebooks)
-
-1. **NB01 - Agrégation des tables** : Transformation des 122 features initiales en 804 features agrégées
-2. **NB02 - Pipeline de préparation** : Preprocessing et feature engineering
-3. **NB03 - Comparaison des modèles** : Benchmark de différents algorithmes
-4. **NB04 - Gestion du déséquilibre** : class_weight='balanced'
-5. **NB05 - Optimisation du seuil** : Calibration selon les coûts métier (FN=10, FP=1)
-6. **NB06 - Interprétabilité SHAP** : Explainability globale et locale des prédictions
-7. **NB07 - Monitoring data drift** : Détection des dérives avec Evidently
-
-### 2. API FastAPI
-
-- Endpoint de prédiction
-- Endpoint d'explainability (SHAP values)
-- Health check et informations du modèle
-- Dockerisé pour déploiement
-
-### 3. Dashboard Streamlit
-
-- Interface pour chargés de relation client
-- Prédiction en temps réel avec jauge visuelle
-- Graphiques SHAP interactifs
-- Mapping des features vers libellés métier
-- Historique des décisions
+Développer un **modèle de scoring crédit orienté décision métier** pour prédire le risque de défaut de paiement d'un client, en optimisant le seuil de classification selon le coût business réel — et non selon une métrique technique standard.
 
 ---
 
-## 📁 Structure du projet
+## 📊 Résultats
+
+| Indicateur | Valeur |
+|-----------|--------|
+| Modèle retenu | LightGBM |
+| AUC-ROC | 0.78 |
+| Seuil optimisé (coût métier) | Personnalisé |
+| Gestion déséquilibre de classes | SMOTE + class_weight |
+| Tracking expériences | MLflow |
+| Dashboard interactif | Streamlit |
+
+---
+
+## 🏗️ Architecture du projet
+
 ```
-Barre_Stephane_P7/
-├── README.md                                     # Ce fichier
-├── .gitignore                                    # Fichiers exclus de Git
-│
-├── Barre_Stephane_P7_01_aggregation_tables.ipynb
-├── Barre_Stephane_P7_02_preparation_pipeline.ipynb
-├── Barre_Stephane_P7_03_comparaison_modeles.ipynb
-├── Barre_Stephane_P7_04_desequilibre.ipynb
-├── Barre_Stephane_P7_05_optimisation_seuil.ipynb
-├── Barre_Stephane_P7_06_interpretabilite_shap.ipynb
-├── Barre_Stephane_P7_07_data_drift.ipynb
-│
-├── api/                                          # API FastAPI
-│   ├── main.py                                   # Code principal de l'API
-│   ├── requirements.txt                          # Dépendances Python
-│   └── Dockerfile                                # Configuration Docker
-│
-├── dashboard/                                    # Dashboard Streamlit
-│   ├── app.py                                    # Application Streamlit
-│   ├── requirements.txt                          # Dépendances Python
-│   └── Dockerfile                                # Configuration Docker
-│
-├── docs/                                         # Documentation
-│   ├── DATA_STRUCTURE.md                         # Description des données
-│   └── database_schema.png                       # Schéma de la base
-│
-├── reports/                                      # Rapports générés
-│   └── .gitkeep                                  # Maintient le dossier dans Git
-│
-├── scripts/                                      # Scripts utilitaires
-│   └── .gitkeep                                  # Maintient le dossier dans Git
-│
-└── test_samples_backup/                          # Échantillons de test
-    ├── batch_clients.json                        # Batch de clients
-    ├── client_high_risk.json                     # Client à haut risque
-    ├── client_low_risk.json                      # Client à faible risque
-    ├── client_mixed.json                         # Client mixte
-    ├── client_zeros.json                         # Client avec valeurs nulles
-    └── README.md                                 # Documentation des échantillons
+Données clients (Home Credit)
+        │
+        ▼
+  Exploration & nettoyage
+  Feature engineering
+        │
+        ▼
+  Modélisation ML
+  (LightGBM, Random Forest,
+   Régression Logistique)
+        │
+        ▼
+  Optimisation seuil
+  (coût métier : FN > FP)
+        │
+        ▼
+  Tracking MLflow
+        │
+        ▼
+  Dashboard Streamlit
+  (scoring client + explication)
 ```
 
 ---
 
-## 🚀 Installation et utilisation
+## ⚙️ Stack technique
 
-### Prérequis
+| Composant | Technologie |
+|-----------|------------|
+| Modélisation | LightGBM · Random Forest · Régression Logistique |
+| Déséquilibre de classes | SMOTE · class_weight |
+| Optimisation seuil | Fonction de coût métier personnalisée |
+| Tracking | MLflow |
+| Dashboard | Streamlit |
+| Interprétabilité | SHAP |
+| Données | Home Credit Default Risk (Kaggle) |
 
-- Python 3.10 ou supérieur
-- pip (gestionnaire de paquets Python)
-- Git
+---
 
-### Installation
+## 🔑 Choix techniques clés
 
-**1. Cloner le repository**
-```bash
-git clone https://github.com/stephanebarre13-boop/Barre_Stephane_P7.git
-cd Barre_Stephane_P7
+**Optimisation du seuil de décision**
+Le seuil de classification n'est pas fixé à 0.5 par défaut — il est optimisé selon une **fonction de coût métier** où un faux négatif (accorder un crédit à un mauvais payeur) coûte plus cher qu'un faux positif (refuser un bon client). Cette approche est directement applicable en contexte bancaire réel.
+
+**Gestion du déséquilibre de classes**
+Le dataset Home Credit est fortement déséquilibré (~8% de défauts). Combinaison de SMOTE et class_weight pour corriger ce biais sans perdre d'information.
+
+**Interprétabilité SHAP**
+Les décisions du modèle sont expliquées via SHAP — indispensable en contexte réglementaire bancaire (obligation d'expliquer les refus de crédit).
+
+---
+
+## 🖥️ Dashboard Streamlit
+
+Le dashboard permet de :
+- Saisir les caractéristiques d'un client
+- Obtenir un **score de risque** en temps réel
+- Visualiser les **variables les plus influentes** (SHAP)
+- Ajuster le **seuil de décision** selon le profil de risque souhaité
+
+---
+
+## 🗂️ Structure du projet
+
+```
+OC_DS_P7_Scoring/
+│
+├── notebooks/
+│   └── P7_Scoring_EDA.ipynb           # Exploration des données
+│   └── P7_Scoring_Modelisation.ipynb  # Modélisation & optimisation
+│
+├── src/
+│   └── dashboard.py                   # Application Streamlit
+│   └── scoring_model.py               # Pipeline ML
+│
+├── mlruns/                            # Expériences MLflow
+│
+└── README.md
 ```
 
-**2. Télécharger les données**
+---
 
-Les données sources proviennent du challenge Kaggle [Home Credit Default Risk](https://www.kaggle.com/c/home-credit-default-risk/data).
+## 📚 Formation
 
-Télécharger et placer les fichiers CSV dans un dossier `/data/` :
-- `application_train.csv`
-- `application_test.csv`
-- `bureau.csv`
-- `bureau_balance.csv`
-- `credit_card_balance.csv`
-- `installments_payments.csv`
-- `POS_CASH_balance.csv`
-- `previous_application.csv`
-
-**3. Générer les modèles**
-
-Exécuter les notebooks dans l'ordre (01 à 05) pour générer les artifacts dans `/artifacts/`.
+Projet réalisé dans le cadre de la formation **Data Scientist** — [OpenClassrooms](https://openclassrooms.com)
+Accréditation universitaire **WSCUC** (Western Association of Schools and Colleges — USA) · Niveau Master / Bac+5
 
 ---
 
-### Lancement de l'API
-```bash
-cd api
-pip install -r requirements.txt
-uvicorn main:app --reload
-```
+## 👤 Auteur
 
-L'API sera accessible sur `http://localhost:8000`
+**Stéphane Barré**
+Data Scientist | PySpark · AWS · ML · NLP | Double profil Ingénieur · Data Scientist
 
-Documentation interactive : `http://localhost:8000/docs`
-
----
-
-### Lancement du dashboard
-```bash
-cd dashboard
-pip install -r requirements.txt
-streamlit run app.py
-```
-
-Le dashboard sera accessible sur `http://localhost:8501`
-
----
-
-## 🛠️ Technologies utilisées
-
-### Machine Learning & Data Science
-- **pandas** : Manipulation de données
-- **numpy** : Calculs numériques
-- **scikit-learn** : Preprocessing et métriques
-- **LightGBM** : Algorithme de gradient boosting
-- **SHAP** : Explainability des prédictions
-
-### Backend & API
-- **FastAPI** : Framework API REST
-- **Pydantic** : Validation des données
-- **uvicorn** : Serveur ASGI
-- **joblib** : Sérialisation des modèles
-
-### Frontend
-- **Streamlit** : Dashboard interactif
-- **Plotly** : Visualisations interactives
-
-### Monitoring & DevOps
-- **Evidently** : Détection de data drift
-- **Docker** : Conteneurisation
-- **pytest** : Tests unitaires (si applicable)
-
----
-
-## 📊 Résultats et performances
-
-### Modèle final
-- **Algorithme** : LightGBM Classifier
-- **Features** : 804 (après agrégation de 7 tables)
-- **Seuil optimal** : 0.370 (optimisé selon ratio coût 10:1)
-- - **AUC-ROC** : 0.787 (validation croisée 5 folds)
-
-### Méthodologie
-- **Gestion déséquilibre** : class_weight='balanced'
-- **Optimisation** : Minimisation du coût métier (FN coûte 10x plus que FP)
-- **Explainability** : SHAP values pour chaque prédiction
-
-### Monitoring
-- **Data drift** : Monitoring avec Evidently pour détecter les dérives
-- **Rapports** : Génération automatique de rapports HTML
-
----
-
-## 📝 Notes importantes
-
-### Données exclues du repository
-
-Les fichiers suivants sont exclus du repository Git (voir `.gitignore`) :
-- `/data/` : Données sources (plusieurs Go)
-
-Ces exclusions respectent les bonnes pratiques Git (pas de fichiers volumineux).
-
-### Reproductibilité
-
-Le projet est entièrement reproductible :
-1. Télécharger les données depuis Kaggle
-2. Exécuter les notebooks 01 à 07 dans l'ordre
-3. Les artifacts seront générés automatiquement
-
----
-
-## 🎓 Compétences développées
-
-- Développement d'un modèle de scoring avec gestion du déséquilibre
-- Optimisation selon des contraintes métier
-- Déploiement d'une API de prédiction
-- Création d'un dashboard avec explainability
-- Monitoring des performances en production
-- Conteneurisation avec Docker
-
----
-
-## 📧 Contact
-
-**Stéphane BARRE**  
-Étudiant - OpenClassrooms Data Scientist  
-GitHub : [stephanebarre13-boop](https://github.com/stephanebarre13-boop)
-
----
-
-## 📄 Licence
-
-Ce projet est réalisé dans le cadre de la formation OpenClassrooms Data Scientist.
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-stephane--barre--data-blue?logo=linkedin)](https://www.linkedin.com/in/stephane-barre-data)
+[![GitHub](https://img.shields.io/badge/GitHub-stephanebarre13--boop-black?logo=github)](https://github.com/stephanebarre13-boop)
